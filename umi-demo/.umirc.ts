@@ -38,5 +38,14 @@ export default defineConfig({
         // flatMenu: true
       },
     },
+    {
+      path: '/chart/gantt',
+      component: '@/pages/charts/GanttChart',
+      menu: {
+        name: '图表',
+        icon: 'BarChart',
+        // flatMenu: true
+      },
+    },
   ],
 });
