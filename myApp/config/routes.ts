@@ -1,15 +1,15 @@
 export default [
-  {
-    path: '/user',
-    component: '../layouts/UserLayout',
-    routes: [
-      {
-        name: 'login',
-        path: '/user/login',
-        component: './user/login',
-      },
-    ],
-  },
+  // {
+  //   path: '/user',
+  //   component: '../layouts/UserLayout',
+  //   routes: [
+  //     {
+  //       name: 'login',
+  //       path: '/user/login',
+  //       component: './user/login',
+  //     },
+  //   ],
+  // },
   {
     path: '/',
     component: '../layouts/SecurityLayout',
@@ -30,26 +30,15 @@ export default [
             component: './Welcome',
           },
           {
-            path: '/admin',
-            name: 'admin',
-            icon: 'crown',
-            component: './Admin',
-            authority: ['admin'],
-            routes: [
-              {
-                path: '/admin/sub-page',
-                name: 'sub-page',
-                icon: 'smile',
-                component: './Welcome',
-                authority: ['admin'],
-              },
-            ],
-          },
-          {
-            name: 'list.table-list',
-            icon: 'table',
-            path: '/list',
-            component: './ListTableList',
+            path: '/demo',
+            name: 'demo',
+            icon: 'smile',
+            component: './Demo',
+          }, {
+            path: '/form',
+            name: 'form',
+            icon: 'smile',
+            component: './Form',
           },
           {
             component: './404',
