@@ -16,10 +16,9 @@ const Demo = () => {
     setrecord(record);
     setIsUpdate(update);
   };
-  const deleting = (key:any) => {
-    console.log(key);
+  const deleting = (record: any) => {
+    console.log(record);
   };
-  // console.log(isUpdata, 'isUpdata>>>>>>>>');
   const handleOk = () => {
     form
       .validateFields()
@@ -39,23 +38,21 @@ const Demo = () => {
   const handleCanle = () => {
     setModalVisible(false);
   };
-  const onFieldsChange=(changedFields:any, allFields:any)=>{
+  const onFieldsChange = (changedFields: any, allFields: any) => {
     // console.log(changedFields,'changedFields');
     // console.log(allFields,'allFields');
-  }
-  const onValuesChange=(changedValues:any, allValues:any)=>{
+  };
+  const onValuesChange = (changedValues: any, allValues: any) => {
     // console.log(changedValues, allValues);
-    
-  }
- 
+  };
 
-  const normFile= e =>{
-    console.log(e,'e');
-    if(Array.isArray(e)){
-      return e
+  const normFile = (e) => {
+    console.log(e, 'e');
+    if (Array.isArray(e)) {
+      return e;
     }
-    return e&&e.fileList
-  }
+    return e && e.fileList;
+  };
   const columns = [
     {
       dataIndex: 'a',
@@ -81,10 +78,10 @@ const Demo = () => {
           <Button type="link" onClick={() => opening(record, true)}>
             编辑
           </Button>
-          <Popconfirm title="要删?" onConfirm={() => deleting(record.key)}>
+          <Popconfirm title="要删?" onConfirm={() => deleting(record)}>
             <a>删除</a>
           </Popconfirm>
-      </div>
+        </div>
       ),
     },
   ];
@@ -101,14 +98,14 @@ const Demo = () => {
 
   return (
     <div>
-      <Button onClick={() => opening(null, false)}>
-        新增
-      </Button>
+      <Button onClick={() => opening(null, false)}>新增</Button>
       <Table dataSource={list} columns={columns} rowKey="a" />
       <Modal destroyOnClose visible={ModalVisible} onOk={handleOk} onCancel={handleCanle}>
-        <Form form={form} initialValues={Modalrecord}
-        onFieldsChange={onFieldsChange}
-        onValuesChange={onValuesChange}
+        <Form
+          form={form}
+          initialValues={Modalrecord}
+          onFieldsChange={onFieldsChange}
+          onValuesChange={onValuesChange}
         >
           <Form.Item
             label="a"
@@ -130,8 +127,7 @@ const Demo = () => {
           <Form.Item label="b" name="b">
             <Input />
           </Form.Item>
-          <Form.Item label="c" name="c" 
-            >
+          <Form.Item label="c" name="c">
             <Input disabled={isUpdata} />
           </Form.Item>
         </Form>
