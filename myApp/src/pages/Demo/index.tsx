@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Table, Modal, Form, Input } from 'antd';
+import { Button, Table, Modal, Form, Input, Popconfirm } from 'antd';
 import useQueryData from '@/hooks/useQueryData';
 import { queryListService } from './service';
 import { _onCreate } from '@/.umi/plugin-dva/dva';
@@ -10,20 +10,17 @@ const Demo = () => {
   const { list } = result;
   const [ModalVisible, setModalVisible] = useState<boolean>(false);
   const [Modalrecord, setrecord] = useState<{ a: string; b: string; c: string }>();
-  // const [Modalkey,SetModalkey]=useState<string>()
-  const opening = (record: any) => {
+  const [isUpdata, setIsUpdate] = useState<boolean>(false);
+  const opening = (record: any, update: boolean) => {
     setModalVisible(true);
     setrecord(record);
+    setIsUpdate(update);
   };
-  // console.log(Modalrecord);
-
-  // const change=(key:any)=>{
-  //   console.log(key);
-  //   SetModalkey(key)
-  // }
-
+  const deleting = (key:any) => {
+    console.log(key);
+  };
+  // console.log(isUpdata, 'isUpdata>>>>>>>>');
   const handleOk = () => {
-    // console.log(form.getFieldsValue());
     form
       .validateFields()
       .then(
@@ -31,7 +28,7 @@ const Demo = () => {
           console.log(values);
         },
         (error) => {
-          console.log(error, '>>>>error');
+          // console.log(error, '>>>>error');
         },
       )
       .catch((error) => {
@@ -42,6 +39,23 @@ const Demo = () => {
   const handleCanle = () => {
     setModalVisible(false);
   };
+  const onFieldsChange=(changedFields:any, allFields:any)=>{
+    // console.log(changedFields,'changedFields');
+    // console.log(allFields,'allFields');
+  }
+  const onValuesChange=(changedValues:any, allValues:any)=>{
+    // console.log(changedValues, allValues);
+    
+  }
+ 
+
+  const normFile= e =>{
+    console.log(e,'e');
+    if(Array.isArray(e)){
+      return e
+    }
+    return e&&e.fileList
+  }
   const columns = [
     {
       dataIndex: 'a',
@@ -63,9 +77,14 @@ const Demo = () => {
       key: 'actions',
       title: '编辑',
       render: (_: any, record: any) => (
-        <Button type="link" onClick={() => opening(record)}>
-          编辑
-        </Button>
+        <div>
+          <Button type="link" onClick={() => opening(record, true)}>
+            编辑
+          </Button>
+          <Popconfirm title="要删?" onConfirm={() => deleting(record.key)}>
+            <a>删除</a>
+          </Popconfirm>
+      </div>
       ),
     },
   ];
@@ -82,12 +101,23 @@ const Demo = () => {
 
   return (
     <div>
+      <Button onClick={() => opening(null, false)}>
+        新增
+      </Button>
       <Table dataSource={list} columns={columns} rowKey="a" />
       <Modal destroyOnClose visible={ModalVisible} onOk={handleOk} onCancel={handleCanle}>
-        <Form form={form} initialValues={Modalrecord}>
+        <Form form={form} initialValues={Modalrecord}
+        onFieldsChange={onFieldsChange}
+        onValuesChange={onValuesChange}
+        >
           <Form.Item
             label="a"
             name="a"
+            extra="hello"
+            getValueFromEvent={normFile}
+            hasFeedback={true}
+            help="aaaaaaa"
+            validateTrigger={['onChange', 'onBlur']}
             rules={[
               {
                 required: true,
@@ -100,8 +130,9 @@ const Demo = () => {
           <Form.Item label="b" name="b">
             <Input />
           </Form.Item>
-          <Form.Item label="c" name="c">
-            <Input />
+          <Form.Item label="c" name="c" 
+            >
+            <Input disabled={isUpdata} />
           </Form.Item>
         </Form>
       </Modal>
