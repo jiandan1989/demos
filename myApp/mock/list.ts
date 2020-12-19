@@ -3,6 +3,7 @@ import { Random } from 'mockjs';
 const list = Array(100)
   .fill(1)
   .map(() => ({
+    id: Random.id(),
     a: Random.cname(),
     b: Random.city(),
     c: Random.name(),

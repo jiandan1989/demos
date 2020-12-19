@@ -34,6 +34,11 @@ export default [
             name: 'demo',
             icon: 'smile',
             component: './Demo',
+          },{
+            path: '/table',
+            name: 'demo',
+            icon: 'smile',
+            component: './Table',
           }, {
             path: '/form',
             name: 'form',
