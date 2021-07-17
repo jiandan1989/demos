@@ -1,5 +1,5 @@
 ```bash
-cd 
+cd umi-demo
 cnpm i
 
 npm run dev
