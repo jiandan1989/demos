@@ -1,7 +1,8 @@
 {
-  "private": true,
   "scripts": {
-    "start:docs": "docsify serve docs"
+    "start:docs": "docsify serve docs",
+    "start:app": "cd app && npm start",
+    "start:chart": "cd chart && npm run dev"
   },
   "dependencies": {
     "docsify-cli": "^4.4.1"
