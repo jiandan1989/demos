@@ -1,5 +1,6 @@
-# umi
+```bash
+cd 
+cnpm i
 
-```ts
-const a = [];
+npm run dev
 ```
