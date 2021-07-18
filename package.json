@@ -2,7 +2,7 @@
   "scripts": {
     "start:docs": "docsify serve docs",
     "start:app": "cd app && npm start",
-    "start:chart": "cd chart && npm run dev"
+    "start:chart": "cd chart && npm run start"
   },
   "dependencies": {
     "docsify-cli": "^4.4.1"
