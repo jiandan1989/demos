@@ -1,59 +1,35 @@
-import React, { useEffect, useRef, useState } from 'react';
-// import { Spin } from 'antd';
-import BpmnJS from 'bpmn-js';
-// import xmlData from './test';
+import React, { Fragment, useEffect, useState } from 'react';
+import { Tabs} from 'antd';
+import { useQuery } from '@/hooks';
 
-interface IProps {
-  loading?: boolean;
-  width?: number | string;
-  height?: number | string;
-  onLoaded?(instance: BpmnJS): void;
-  toSvg?(): SVGAElement;
-  toXml?(): XMLDocument;
-}
+import { BpmnViewer, PropertiesPanel } from '@/components/bpmn';
+import { allExample } from './contant';
+import type { ExampleTypes } from './contant';
+import { queryXmlDataService } from './service';
 
-const BmpnChart = React.forwardRef<any, IProps>((props, ref) => {
-  const { loading, width, height, onLoaded } = props;
+const BmpnChart = () => {
+  const [value, setValue] = useState<ExampleTypes>('url-view');
+  const [xmlData, queryXmlData, loading] = useQuery(queryXmlDataService);
 
-  const bpmnRef = useRef<HTMLDivElement | null>(null);
-  const [viewer, setViewer] = useState<BpmnJS | null>(null);
+  useEffect(() => {queryXmlData()}, [queryXmlData])
 
-  useEffect(() => {
-    if (bpmnRef.current) {
-      const instance = new BpmnJS({ container: bpmnRef.current });
-
-      if (onLoaded) {
-        onLoaded(instance);
-      }
-
-      // instance.importXML(xmlData);
-      /** 事件绑定 */
-      setViewer(instance);
-
-      // instance.get('canvas').zoom('fit-viewport');
-      console.log(instance.get('canvas'));
-
-      async function toSvg() {
-        const data = await instance.saveSVG();
-        console.log(data, '>>>>>>>>>>');
-      }
-      toSvg();
-    }
-  }, []);
+  const props = {
+    loading,
+    xmlData
+  }
 
   return (
-    // <Spin spinning={loading} style={{ width, height }}>
-    <div style={{ width, height }} ref={bpmnRef} />
-    // </Spin>
+   <Fragment>
+      <Tabs type="card" activeKey={value} onChange={v => { setValue(v as ExampleTypes);}}>
+        {allExample.map(item => <Tabs.TabPane tab={item.label} key={item.key} />)}
+      </Tabs>
+      <div style={{ height: 500 }}>
+      {value === 'url-view' && <BpmnViewer {...props} />}
+      {value ==='propertiesPanel' && <PropertiesPanel {...props} />}
+      </div>
+   </Fragment>
   );
-});
 
-BmpnChart.defaultProps = {
-  loading: false,
-  width: 400,
-  height: 500,
-  // width: '100%',
-  // height: '100%',
 };
 
 export default BmpnChart;

@@ -10,9 +10,17 @@
 
 ```bash
 npm install bpmn-js -S
+```
 
-# 如果在TS中使用, 需要安装
-npm install -D @types/bpmn-js
+如果在TS中使用, 没有指定 @types, 没有对应的API, 执行摸索
+
+```ts
+declare module 'bpmn-js' {
+  export default class BpmnJS {
+    constructor(param?: { container: string });
+    ...
+  }
+}
 ```
 
 
