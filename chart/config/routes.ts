@@ -35,4 +35,11 @@ export default [
       // flatMenu: true
     },
   },
+  {
+    path: '/chart/antd/doubley',
+    component: '@/pages/charts/AntdChart/DoubleYChart',
+    menu: {
+      name: '双Y轴',
+    },
+  },
 ]
